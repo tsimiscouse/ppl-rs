@@ -7,6 +7,7 @@ import { errorHandler, notFound } from './middlewares/errorHandler';
 // Routes
 import doctorRoutes from './routes/doctorRoutes';
 import patientQueueRoutes from './routes/patientQueueRoutes';
+import timeSlotRoutes from './routes/availableTimeSlotRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -32,7 +33,8 @@ app.get('/', (req, res) => {
     endpoints: {
       doctors: '/api/doctors',
       visitTimes: '/api/visit-times',
-      patientQueues: '/api/patient-queues'
+      patientQueues: '/api/patient-queues',
+      timeSlots: '/api/time-slots',
     }
   });
 });
@@ -40,6 +42,7 @@ app.get('/', (req, res) => {
 // API routes
 app.use('/api/doctors', doctorRoutes);
 app.use('/api/patient-queues', patientQueueRoutes);
+app.use('/api/time-slots', timeSlotRoutes);
 
 // Error handling middleware
 app.use(notFound);
