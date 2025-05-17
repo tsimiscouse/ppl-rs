@@ -1,21 +1,67 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Tiket from "../component/Tiket";
 
 const Pendaftaran = () => {
   const [daftarAntrean, setDaftarAntrean] = useState(false);
   const [nama, setNama] = useState("");
   const [spesialis, setSpesialis] = useState("");
+  const [spesialisOptions, setSpesialisOptions] = useState([]);
   const [dokter, setDokter] = useState("");
+  const [dokterOptions, setDokterOptions] = useState([]);
   const [jam, setJam] = useState("");
+
+  useEffect(() => {
+    const fetchSpecializations = async () => {
+      try {
+        const response = await axios.get("/api/doctors/specializations");
+        const specializations =
+          response.data.data?.map((item) => item.specialization) || [];
+        setSpesialisOptions(specializations);
+        console.log(response?.data.data || "No Data Available");
+      } catch (error) {
+        console.error("Error Fetching Specializations:", error);
+      }
+    };
+
+    fetchSpecializations();
+  }, []);
+
+  useEffect(() => {
+    if (!spesialis) return;
+
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get(
+          `/api/doctors/specializations/${spesialis}`
+        );
+        setDokterOptions(response.data.data);
+        setDokter("");
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    };
+
+    fetchDoctors();
+  }, [spesialis]);
 
   function generateQueueNumber() {
     const alphabet = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // 'A' to 'Z'
     const number = String(Math.floor(Math.random() * 100)).padStart(3, "0"); // '00' to '99'
     return alphabet + number;
   }
+
+  const handleDaftarAntrean = () => {
+    if (!nama || !spesialis || !dokter || !jam) {
+      alert("Semua input harus diisi terlebih dahulu!");
+      return;
+    }
+    setDaftarAntrean(true);
+  };
 
   return (
     <div className="w-screen h-screen relative flex flex-col justify-center items-center">
@@ -32,6 +78,7 @@ const Pendaftaran = () => {
             type="text"
             placeholder="Insert nama anda di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           />
         </div>
         <div className="flex flex-col mb-4">
@@ -41,13 +88,19 @@ const Pendaftaran = () => {
             onChange={(e) => setSpesialis(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Pilih spesialis dokter
             </option>
-            <option value="Jantung">Jantung</option>
+            {spesialisOptions.map((spec, index) => (
+              <option value={spec} key={index}>
+                {spec}
+              </option>
+            ))}
+            {/* <option value="Jantung">Jantung</option>
             <option value="Paru-Paru">Paru-Paru</option>
-            <option value="Saraf">Saraf</option>
+            <option value="Saraf">Saraf</option> */}
           </select>
         </div>
         <div className="flex flex-col mb-4">
@@ -57,13 +110,22 @@ const Pendaftaran = () => {
             onChange={(e) => setDokter(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Pilih dokter
             </option>
-            <option value="Dokter A">Dokter A</option>
+            {dokterOptions.map((doc, index) => (
+              <option
+                value={typeof doc === "string" ? doc : doc.name}
+                key={index}
+              >
+                {typeof doc === "string" ? doc : doc.name}
+              </option>
+            ))}
+            {/* <option value="Dokter A">Dokter A</option>
             <option value="Dokter B">Dokter B</option>
-            <option value="Dokter C">Dokter C</option>
+            <option value="Dokter C">Dokter C</option> */}
           </select>
         </div>
         <div className="flex flex-col">
@@ -73,8 +135,9 @@ const Pendaftaran = () => {
             onChange={(e) => setJam(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Pilih jam kunjungan
             </option>
             <option value="07:00">07:00</option>
@@ -89,7 +152,7 @@ const Pendaftaran = () => {
             <button
               type="button"
               className="p-2 bg-black rounded-md text-white"
-              onClick={() => setDaftarAntrean(true)}
+              onClick={handleDaftarAntrean}
             >
               Daftar Antrean
             </button>
@@ -103,7 +166,10 @@ const Pendaftaran = () => {
         </div>
       </form>
       {daftarAntrean && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div
+          id="tiket-modal"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        >
           <Tiket
             nomor_antrean={generateQueueNumber()}
             nama_pasien={nama}
