@@ -1,51 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Tiket from "../component/Tiket";
 
 const Pendaftaran = () => {
   const [daftarAntrean, setDaftarAntrean] = useState(false);
   const [nama, setNama] = useState("");
   const [spesialis, setSpesialis] = useState("");
-  const [spesialisOptions, setSpesialisOptions] = useState([]);
   const [dokter, setDokter] = useState("");
-  const [dokterOptions, setDokterOptions] = useState([]);
   const [jam, setJam] = useState("");
-
-  useEffect(() => {
-    const fetchSpecializations = async () => {
-      try {
-        const response = await axios.get("/api/doctors/specializations");
-        setSpesialisOptions(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error Fetching Specializations:", error);
-      }
-    };
-
-    fetchSpecializations();
-  }, []);
-
-  useEffect(() => {
-    if (!spesialis) return;
-
-    const fetchDoctors = async () => {
-      try {
-        const response = await axios.get(
-          `/api/doctors/specializations/${spesialis}`
-        );
-        setDokterOptions(response.data);
-        setDokter("");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching doctors:", error);
-      }
-    };
-
-    fetchDoctors();
-  }, [spesialis]);
 
   function generateQueueNumber() {
     const alphabet = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // 'A' to 'Z'
@@ -91,12 +55,9 @@ const Pendaftaran = () => {
             <option value="" disabled>
               Pilih spesialis dokter
             </option>
-            {spesialisOptions.map((spec, index) => (
-              <option value={spec} key={index}></option>
-            ))}
-            {/* <option value="Jantung">Jantung</option>
+            <option value="Jantung">Jantung</option>
             <option value="Paru-Paru">Paru-Paru</option>
-            <option value="Saraf">Saraf</option> */}
+            <option value="Saraf">Saraf</option>
           </select>
         </div>
         <div className="flex flex-col mb-4">
@@ -111,17 +72,9 @@ const Pendaftaran = () => {
             <option value="" disabled>
               Pilih dokter
             </option>
-            {dokterOptions.map((doc, index) => (
-              <option
-                value={typeof doc === "string" ? doc : doc.name}
-                key={index}
-              >
-                {typeof doc === "string" ? doc : doc.name}
-              </option>
-            ))}
-            {/* <option value="Dokter A">Dokter A</option>
+            <option value="Dokter A">Dokter A</option>
             <option value="Dokter B">Dokter B</option>
-            <option value="Dokter C">Dokter C</option> */}
+            <option value="Dokter C">Dokter C</option>
           </select>
         </div>
         <div className="flex flex-col">
