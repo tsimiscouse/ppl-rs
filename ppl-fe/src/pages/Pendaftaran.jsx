@@ -18,8 +18,10 @@ const Pendaftaran = () => {
     const fetchSpecializations = async () => {
       try {
         const response = await axios.get("/api/doctors/specializations");
-        setSpesialisOptions(response.data);
-        console.log(response.data);
+        const specializations =
+          response.data.data?.map((item) => item.specialization) || [];
+        setSpesialisOptions(specializations);
+        console.log(response?.data.data || "No Data Available");
       } catch (error) {
         console.error("Error Fetching Specializations:", error);
       }
@@ -36,7 +38,7 @@ const Pendaftaran = () => {
         const response = await axios.get(
           `/api/doctors/specializations/${spesialis}`
         );
-        setDokterOptions(response.data);
+        setDokterOptions(response.data.data);
         setDokter("");
         console.log(response.data);
       } catch (error) {
@@ -92,7 +94,9 @@ const Pendaftaran = () => {
               Pilih spesialis dokter
             </option>
             {spesialisOptions.map((spec, index) => (
-              <option value={spec} key={index}></option>
+              <option value={spec} key={index}>
+                {spec}
+              </option>
             ))}
             {/* <option value="Jantung">Jantung</option>
             <option value="Paru-Paru">Paru-Paru</option>
