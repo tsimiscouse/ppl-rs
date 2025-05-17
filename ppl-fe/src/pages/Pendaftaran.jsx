@@ -17,6 +17,14 @@ const Pendaftaran = () => {
     return alphabet + number;
   }
 
+  const handleDaftarAntrean = () => {
+    if (!nama || !spesialis || !dokter || !jam) {
+      alert("Semua input harus diisi terlebih dahulu!");
+      return;
+    }
+    setDaftarAntrean(true);
+  };
+
   return (
     <div className="w-screen h-screen relative flex flex-col justify-center items-center">
       <h1 className="font-bold text-7xl mb-6">Hospital System</h1>
@@ -32,6 +40,7 @@ const Pendaftaran = () => {
             type="text"
             placeholder="Insert nama anda di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           />
         </div>
         <div className="flex flex-col mb-4">
@@ -41,8 +50,9 @@ const Pendaftaran = () => {
             onChange={(e) => setSpesialis(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Pilih spesialis dokter
             </option>
             <option value="Jantung">Jantung</option>
@@ -57,8 +67,9 @@ const Pendaftaran = () => {
             onChange={(e) => setDokter(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Pilih dokter
             </option>
             <option value="Dokter A">Dokter A</option>
@@ -73,8 +84,9 @@ const Pendaftaran = () => {
             onChange={(e) => setJam(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
+            required
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Pilih jam kunjungan
             </option>
             <option value="07:00">07:00</option>
@@ -89,7 +101,7 @@ const Pendaftaran = () => {
             <button
               type="button"
               className="p-2 bg-black rounded-md text-white"
-              onClick={() => setDaftarAntrean(true)}
+              onClick={handleDaftarAntrean}
             >
               Daftar Antrean
             </button>
@@ -103,7 +115,10 @@ const Pendaftaran = () => {
         </div>
       </form>
       {daftarAntrean && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div
+          id="tiket-modal"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        >
           <Tiket
             nomor_antrean={generateQueueNumber()}
             nama_pasien={nama}
