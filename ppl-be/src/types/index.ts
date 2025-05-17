@@ -28,12 +28,21 @@ export interface ErrorResponse {
   message: string;
 }
 
+export interface TimeSlotData {
+  id: number;
+  time_slot: Date;
+}
+
 // API Response types
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
+}
+
+export interface TimeSlotAvailabilityResponse {
+  isAvailable: boolean;
 }
 
 export interface DoctorSpecialization {

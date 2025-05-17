@@ -34,7 +34,7 @@ const TabelHistori = () => {
   useEffect(() => {
     const fetchDataPasien = async () => {
       try {
-        const response = await axios.get("/api/patient-queues");
+        const response = await axios.get("http://localhost:3000/api/patient-queues");
         setDataPasien(response.data.data);
         console.log(
           "Patient queue data:",

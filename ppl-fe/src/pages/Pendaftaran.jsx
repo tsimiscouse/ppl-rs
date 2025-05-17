@@ -17,7 +17,7 @@ const Pendaftaran = () => {
   useEffect(() => {
     const fetchSpecializations = async () => {
       try {
-        const response = await axios.get("/api/doctors/specializations");
+        const response = await axios.get("http://localhost:3000/api/doctors/specializations");
         const specializations =
           response.data.data?.map((item) => item.specialization) || [];
         setSpesialisOptions(specializations);
@@ -36,7 +36,7 @@ const Pendaftaran = () => {
     const fetchDoctors = async () => {
       try {
         const response = await axios.get(
-          `/api/doctors/specializations/${spesialis}`
+          `http://localhost:3000/api/doctors/specialization/${spesialis}`
         );
         setDokterOptions(response.data.data);
         setDokter("");
