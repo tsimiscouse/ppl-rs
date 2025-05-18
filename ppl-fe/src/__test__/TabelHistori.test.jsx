@@ -92,6 +92,26 @@ describe("TabelHistori Component", () => {
     });
   });
 
+  it("navigates to previous page when Previous button clicked", async () => {
+    render(
+      <MemoryRouter>
+        <TabelHistori />
+      </MemoryRouter>
+    );
+
+    // Go to page 2 first
+    fireEvent.click(await screen.findByText("2"));
+
+    await waitFor(() => expect(screen.getByText("Dave")).toBeInTheDocument());
+
+    // Click Previous
+    fireEvent.click(screen.getByText("Previous"));
+
+    await waitFor(() =>
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+    );
+  });
+
   it("disables previous button on first page", async () => {
     render(
       <MemoryRouter>
@@ -214,6 +234,18 @@ describe("TabelHistori Component", () => {
     console.error.mockRestore();
   });
 
+  it("handles null data gracefully", async () => {
+    axios.get.mockResolvedValueOnce({ data: { data: null } });
+
+    render(
+      <MemoryRouter>
+        <TabelHistori />
+      </MemoryRouter>
+    );
+
+    expect(await screen.findByText("No Data Available")).toBeInTheDocument();
+  });
+
   it("renders 'Tutup History Antrean' link with correct href", () => {
     render(
       <MemoryRouter>
@@ -224,5 +256,20 @@ describe("TabelHistori Component", () => {
     const link = screen.getByRole("link", { name: /Tutup History Antrean/i });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/");
+  });
+
+  it("navigates home when 'Tutup History Antrean' link clicked", () => {
+    render(
+      <MemoryRouter>
+        <TabelHistori />
+      </MemoryRouter>
+    );
+
+    const link = screen.getByRole("link", { name: /Tutup History Antrean/i });
+    expect(link).toBeInTheDocument();
+
+    fireEvent.click(link);
+    // Because MemoryRouter is used without history mocks, actual navigation test is limited.
+    // But you can check href or use userEvent and spy on history.push if you add react-router mocks.
   });
 });
