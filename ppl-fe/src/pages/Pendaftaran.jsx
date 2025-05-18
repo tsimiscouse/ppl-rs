@@ -58,7 +58,9 @@ const Pendaftaran = () => {
 
     const fetchAvailTime = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/time-slots/available/${dokter?.id}`);
+        const response = await axios.get(
+          `http://localhost:3000/api/time-slots/available/${dokter?.id}`
+        );
         console.log(response.data.data);
         setAvailJam(response.data.data);
         // setJam("");
@@ -86,7 +88,20 @@ const Pendaftaran = () => {
         "http://localhost:3000/api/patient-queues",
         body
       );
-      const newData = response.data.data?.[0];
+
+      const rawData = response?.data.data;
+      const time = new Date(
+        rawData.visitTime.time_slot.replace("Z", "")
+      ).toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+
+      const newData = {
+        ...rawData,
+        jam_kunjungan: time,
+      };
       setTiketData(newData);
       setDaftarAntrean(true);
       console.log(response.data.data);
@@ -195,7 +210,7 @@ const Pendaftaran = () => {
                 </option>
               );
             })}
-   </select>
+          </select>
         </div>
         <div className="w-full flex items-center justify-center mt-3">
           <div className="w-2/3 flex items-center justify-evenly">

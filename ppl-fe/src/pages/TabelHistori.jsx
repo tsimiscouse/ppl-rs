@@ -4,37 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-// const data = [
-//   {
-//     nomor_antrean: "A001",
-//     nama_pasien: "Alex",
-//     spesialis_dokter: "Jantung",
-//     nama_dokter: "Dokter A",
-//     jam_kunjungan: "09.00",
-//   },
-//   {
-//     nomor_antrean: "A001",
-//     nama_pasien: "Alex",
-//     spesialis_dokter: "Jantung",
-//     nama_dokter: "Dokter A",
-//     jam_kunjungan: "09.00",
-//   },
-//   {
-//     nomor_antrean: "A001",
-//     nama_pasien: "Alex",
-//     spesialis_dokter: "Jantung",
-//     nama_dokter: "Dokter A",
-//     jam_kunjungan: "09.00",
-//   },
-// ];
-
 const TabelHistori = () => {
   const [dataPasien, setDataPasien] = useState([]);
 
   useEffect(() => {
     const fetchDataPasien = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/patient-queues");
+        const response = await axios.get(
+          "http://localhost:3000/api/patient-queues"
+        );
         setDataPasien(response.data.data);
         console.log(
           "Patient queue data:",
