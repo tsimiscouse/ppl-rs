@@ -28,7 +28,7 @@ const TabelHistori = () => {
     fetchDataPasien();
   }, []);
 
-  const totalPages = Math.ceil(dataPasien.length / itemsPerPage);
+  const totalPages = Math.ceil((dataPasien?.length || 0) / itemsPerPage);
 
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -83,7 +83,7 @@ const TabelHistori = () => {
         <div className="flex gap-2 mt-6">
           <button
             onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage - 1}
+            disabled={currentPage === 1}
             className="px-4 py-2 border rounded disabled::opacity-50"
           >
             Previous
