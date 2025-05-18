@@ -58,7 +58,8 @@ const Pendaftaran = () => {
 
     const fetchAvailTime = async () => {
       try {
-        const response = `http://localhost:3000/api/time-slots/available/${dokter?.id}`;
+        const response = await axios.get(`http://localhost:3000/api/time-slots/available/${dokter?.id}`);
+        console.log(response.data.data);
         setAvailJam(response.data.data);
         // setJam("");
       } catch (error) {
@@ -163,15 +164,13 @@ const Pendaftaran = () => {
               const selected = availJam.find(
                 (j) => j.id === parseInt(e.target.value)
               );
-              const formatted = new Date(selected.time_slot).toLocaleTimeString(
-                "id-ID",
-                {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                  timeZone: "Asia/Jakarta",
-                }
-              );
+              const formatted = new Date(
+                selected.time_slot.replace("Z", "")
+              ).toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              });
               setJam({ id: selected.id, time: formatted });
             }}
             placeholder="Pilih dokter yang anda inginkan di sini"
@@ -182,15 +181,13 @@ const Pendaftaran = () => {
               Pilih jam kunjungan
             </option>
             {availJam.map((slot) => {
-              const formattedTime = new Date(slot.time_slot).toLocaleTimeString(
-                "id-ID",
-                {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                  timeZone: "Asia/Jakarta",
-                }
-              );
+              const formattedTime = new Date(
+                slot.time_slot.replace("Z", "")
+              ).toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              });
 
               return (
                 <option value={slot.id} key={slot.id}>
@@ -198,12 +195,7 @@ const Pendaftaran = () => {
                 </option>
               );
             })}
-            {/* <option value="07:00">07:00</option>
-            <option value="09:00">09:00</option>
-            <option value="11:00">11:00</option>
-            <option value="14:00">14:00</option>
-            <option value="16:00">16:00</option> */}
-          </select>
+   </select>
         </div>
         <div className="w-full flex items-center justify-center mt-3">
           <div className="w-2/3 flex items-center justify-evenly">
