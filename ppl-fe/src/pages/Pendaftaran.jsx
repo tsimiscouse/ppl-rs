@@ -118,7 +118,7 @@ const Pendaftaran = () => {
       </h1>
       <form action="" className="w-1/2">
         <div className="flex flex-col mb-4">
-          <label htmlFor="">Nama</label>
+          <label htmlFor="Nama">Nama</label>
           <input
             value={nama}
             onChange={(e) => setNama(e.target.value)}
@@ -126,16 +126,18 @@ const Pendaftaran = () => {
             placeholder="Insert nama anda di sini"
             className="w-full border-gray-400 border rounded-md p-1"
             required
+            id="Nama"
           />
         </div>
         <div className="flex flex-col mb-4">
-          <label htmlFor="">Spesialis Dokter</label>
+          <label htmlFor="Spesialis Dokter">Spesialis Dokter</label>
           <select
             value={spesialis}
             onChange={(e) => setSpesialis(e.target.value)}
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
             required
+            id="Spesialis Dokter"
           >
             <option value="" disabled>
               Pilih spesialis dokter
@@ -148,7 +150,7 @@ const Pendaftaran = () => {
           </select>
         </div>
         <div className="flex flex-col mb-4">
-          <label htmlFor="">Nama Dokter</label>
+          <label htmlFor="Nama Dokter">Nama Dokter</label>
           <select
             value={dokter?.id || ""}
             onChange={(e) => {
@@ -160,6 +162,7 @@ const Pendaftaran = () => {
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
             required
+            id="Nama Dokter"
           >
             <option value="" disabled>
               Pilih dokter
@@ -172,7 +175,7 @@ const Pendaftaran = () => {
           </select>
         </div>
         <div className="flex flex-col">
-          <label htmlFor="">Jam Kunjungan</label>
+          <label htmlFor="Jam Kunjungan">Jam Kunjungan</label>
           <select
             value={jam.id}
             onChange={(e) => {
@@ -191,6 +194,7 @@ const Pendaftaran = () => {
             placeholder="Pilih dokter yang anda inginkan di sini"
             className="w-full border-gray-400 border rounded-md p-1"
             required
+            id="Jam Kunjungan"
           >
             <option value="" disabled>
               Pilih jam kunjungan
@@ -238,6 +242,7 @@ const Pendaftaran = () => {
       </form>
       {daftarAntrean && tiketData && (
         <div
+          data-testid="tiket-modal"
           id="tiket-modal"
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
