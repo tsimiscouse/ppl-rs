@@ -3,6 +3,7 @@ import { patientQueueService } from '../services/patientQueueServices';
 import { doctorService } from '../services/doctorServices';
 import { ApiResponse, PatientQueueData } from '../types';
 import { PrismaClient } from '@prisma/client';
+import { getFormattedTime } from '../utils/timeFormatter';
 const prisma = new PrismaClient();
 
 // Get all patient queues
@@ -14,11 +15,8 @@ const getAllPatientQueues: RequestHandler = async (req, res, next) => {
       ...queue,
       visitTime: {
         ...queue.visittime,
-        formatted_time: new Date(queue.visittime.time_slot).toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true
-        })
+        formatted_time: getFormattedTime(queue.visittime.time_slot)
+
       }
     }));
 
@@ -84,11 +82,7 @@ const createPatientQueue: RequestHandler = async (req, res): Promise<void> => {
       ...newPatientQueue,
       visitTime: {
         ...newPatientQueue.visittime,
-        formatted_time: new Date(newPatientQueue.visittime.time_slot).toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true
-        })
+        formatted_time: getFormattedTime(newPatientQueue.visittime.time_slot)
       }
     };
 

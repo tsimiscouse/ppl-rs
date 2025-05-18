@@ -92,7 +92,7 @@ const Pendaftaran = () => {
       const rawData = response?.data.data;
       const time = new Date(
         rawData.visitTime.time_slot.replace("Z", "")
-      ).toLocaleTimeString("id-ID", {
+      ).toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
@@ -181,7 +181,7 @@ const Pendaftaran = () => {
               );
               const formatted = new Date(
                 selected.time_slot.replace("Z", "")
-              ).toLocaleTimeString("id-ID", {
+              ).toLocaleTimeString("en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: false,
@@ -198,7 +198,7 @@ const Pendaftaran = () => {
             {availJam.map((slot) => {
               const formattedTime = new Date(
                 slot.time_slot.replace("Z", "")
-              ).toLocaleTimeString("id-ID", {
+              ).toLocaleTimeString("en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: false,
