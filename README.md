@@ -55,6 +55,9 @@
 ## Coverage Test
 
 ![Coverage Test Result for Front-end](images/coveragetest.jpeg)
+
 Coverage Test untuk Frontend
 
-![Coverage Test Result Back-end](images/coveragebackend.jpeg)
+![Coverage Test Result Back-end](images/coveragebe.jpeg)
+
+Coverage Test untuk Backend
