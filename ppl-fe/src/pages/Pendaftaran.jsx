@@ -106,6 +106,8 @@ const Pendaftaran = () => {
       setDaftarAntrean(true);
       console.log(response.data.data);
     } catch (error) {
+      const apiError = error.response?.data?.error || "Terjadi kesalahan saat mengirim data.";
+      alert("Gagal mendaftar antrean: " + apiError);
       console.error("Error post data:", error);
     }
   };
