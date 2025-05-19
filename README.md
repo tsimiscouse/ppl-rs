@@ -52,6 +52,20 @@
 
 ---
 
+## API Test
+
+![API Test Result for All Endpoint](images/API-test.jpg)
+
+API Test Result for All Endpoint
+
+---
+
 ## Coverage Test
 
-![Coverage Test Result](images/coveragetest.jpeg)
+![Coverage Test Result for Front-end](images/coveragetest.jpeg)
+
+Coverage Test untuk Frontend
+
+![Coverage Test Result Back-end](images/coveragebe.jpeg)
+
+Coverage Test untuk Backend
