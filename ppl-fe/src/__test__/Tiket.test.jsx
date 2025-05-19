@@ -58,4 +58,16 @@ describe("Ticket Component", () => {
     await new Promise((res) => setTimeout(res, 0));
     expect(jsPDF).toHaveBeenCalled();
   });
+
+  test("renders the 'Lanjutkan' link pointing to /TabelHistori", () => {
+    render(
+      <MemoryRouter>
+        <Tiket {...mockProps} />
+      </MemoryRouter>
+    );
+
+    const lanjutkanLink = screen.getByText("Lanjutkan");
+    expect(lanjutkanLink).toBeInTheDocument();
+    expect(lanjutkanLink.closest("a")).toHaveAttribute("href", "/TabelHistori");
+  });
 });
