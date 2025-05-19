@@ -52,3 +52,6 @@
 
 ---
 
+##Coverage Test
+
+![Coverage Test Result](images/coveragetest.jpeg)
