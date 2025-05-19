@@ -5,6 +5,9 @@
 - Gavind Muhammad Pramahita (497221) --> UI/UX Engineer and Black Box Tester
 - Ryan Krishandi Lukito (497249) --> Front-end Developer and White Box Tester
 
+**Slides Link**
+
+- https://docs.google.com/presentation/d/1OGC-A8HcX8cmhLUARn9PXNzSqJfRg0fc0ajCLryjPpA/edit?usp=sharing
 ---
 
 ## ✅ User Requirements
